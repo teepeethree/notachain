@@ -594,7 +594,8 @@ footer .footer-links a:hover {
 /* === DOCUMENT PAGES === */
 .doc-page {
     padding: 8rem 3rem 4rem;
-    max-width: 800px;
+    max-width: 960px;
+    margin: 0 auto;
 }
 .doc-header {
     margin-bottom: 4rem;
@@ -674,9 +675,10 @@ footer .footer-links a:hover {
 
 /* === DOCUMENT TABLES === */
 .doc-table-wrap {
+    margin-left: -2rem;
+    margin-right: -2rem;
+    padding: 0 2rem;
     overflow-x: auto;
-    margin-bottom: 1.5rem;
-    margin-top: 1rem;
 }
 .doc-table-wrap table {
     width: 100%;
