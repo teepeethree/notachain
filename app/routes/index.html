@@ -1,36 +1,170 @@
-<!doctype html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>XYON</title>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-        <link
-            href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&display=swap"
-            rel="stylesheet"
-        />
-        <link rel="stylesheet" href="/stylesheet.css" />
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="32x32"
-            href="/favicon-32x32.png"
-        />
-        <link
-            rel="icon"
-            type="image/png"
-            sizes="16x16"
-            href="/favicon-16x16.png"
-        />
-        <link
-            rel="apple-touch-icon"
-            sizes="180x180"
-            href="/apple-touch-icon.png"
-        />
-        <link rel="icon" type="image/x-icon" href="/favicon.ico" />
-    </head>
-    <body>
-        <p>Hello World!</p>
-    </body>
-</html>
+<div class="grid-bg">
+    <canvas id="tronGrid"></canvas>
+</div>
+
+<div class="content">
+    <nav>
+        <div class="logo"><span>X</span>YON</div>
+        <div class="nav-sep"></div>
+        <ul class="nav-links">
+            <li><a href="/whitepaper">Whitepaper</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <h1><span class="x">X</span>YON</h1>
+        <div class="hero-tagline">
+            <span class="word-trade">Build</span><span class="sep">.</span>
+            <span class="word-protect">Protect</span><span class="sep">.</span>
+            <span class="word-earn">Earn</span><span class="sep">.</span>
+        </div>
+        <p class="hero-sub">
+            A crypto ecosystem that makes building safe and simple.
+        </p>
+    </section>
+
+    <section class="products">
+        <div class="products-header">
+            <h2>The ecosystem</h2>
+            <div class="live-badge">
+                <span class="dot"></span> Live on Ethereum Mainnet
+            </div>
+            <p>One network. Unlimited possibilities.</p>
+        </div>
+        <div class="cards">
+            <div class="card" onclick="window.location.href = '/map'">
+                <div class="card-arrow">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </div>
+                <div class="card-icon">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <rect x="3" y="3" width="7" height="7" />
+                        <rect x="14" y="3" width="7" height="7" />
+                        <rect x="3" y="14" width="7" height="7" />
+                        <rect x="14" y="14" width="7" height="7" />
+                    </svg>
+                </div>
+                <div class="card-label">Building</div>
+                <h3>Land Plots</h3>
+                <p>
+                    Your opportunity to be a part of the XYON ecosystem. Land
+                    ownership is exclusive — every plot is directly supported by
+                    the core team to help grow and develop your own vision.
+                </p>
+                <div class="card-tags">
+                    <span class="card-tag">Exclusive</span
+                    ><span class="card-tag">Team Supported</span
+                    ><span class="card-tag">Build</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.location.href = '/token'">
+                <div class="card-arrow">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </div>
+                <div class="card-icon">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path d="M12 2L2 7l10 5 10-5-10-5z" />
+                        <path d="M2 17l10 5 10-5" />
+                        <path d="M2 12l10 5 10-5" />
+                    </svg>
+                </div>
+                <div class="card-label">Fuel</div>
+                <h3>$404 Token</h3>
+                <p>
+                    The native token that powers XYON with a crash-burn feature.
+                    The worse the crash, the more supply is permanently
+                    destroyed.
+                </p>
+                <div class="card-detail">
+                    Fixed supply of <strong>404,404,404</strong> · Zero tax ·
+                    Deflationary by design
+                </div>
+                <div class="card-tags">
+                    <span class="card-tag">Crash-Burn</span
+                    ><span class="card-tag">Deflationary</span
+                    ><span class="card-tag">Zero Tax</span>
+                </div>
+            </div>
+
+            <div class="card" onclick="window.location.href = '/bsp'">
+                <div class="card-arrow">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <line x1="7" y1="17" x2="17" y2="7" />
+                        <polyline points="7 7 17 7 17 17" />
+                    </svg>
+                </div>
+                <div class="card-icon">
+                    <svg
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="1.8"
+                        stroke-linecap="round"
+                        stroke-linejoin="round"
+                    >
+                        <path
+                            d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"
+                        />
+                    </svg>
+                </div>
+                <div class="card-label">Rewards</div>
+                <h3>Black Swan Pass</h3>
+                <p>
+                    XYON NFT — holders are rewarded with $404 airdrops during
+                    crash-burn events as well as exclusive XYON benefits.
+                </p>
+                <div class="card-detail">
+                    <strong>404</strong> total passes · 1 per wallet · Exclusive
+                    benefits
+                </div>
+                <div class="card-tags">
+                    <span class="card-tag">NFT</span
+                    ><span class="card-tag">Airdrops</span
+                    ><span class="card-tag">Exclusive</span>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
