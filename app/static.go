@@ -24,13 +24,12 @@ func serveStaticFile(path, contentType string) http.HandlerFunc {
 }
 
 func registerStaticRoutes() {
-	http.HandleFunc("/stylesheet.css", serveStaticFile("static/stylesheet.css", "text/css"))
+	http.HandleFunc("/style.css", serveStaticFile("static/style.css", "text/css"))
 	http.HandleFunc("/app.js", serveStaticFile("static/app.js", "application/javascript"))
 	http.HandleFunc("/favicon-16x16.png", serveStaticFile("static/favicon-16x16.png", "image/png"))
 	http.HandleFunc("/favicon-32x32.png", serveStaticFile("static/favicon-32x32.png", "image/png"))
 	http.HandleFunc("/apple-touch-icon.png", serveStaticFile("static/apple-touch-icon.png", "image/png"))
 	http.HandleFunc("/favicon.ico", serveStaticFile("static/favicon.ico", "image/x-icon"))
-	http.HandleFunc("/erbot.webp", serveStaticFile("static/erbot.webp", "image/webp"))
 }
 
 func readFiles(path string) []byte {
