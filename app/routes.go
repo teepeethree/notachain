@@ -13,6 +13,9 @@ func registerRoutes() {
 			return
 		}
 	})
+	http.HandleFunc("/whitepaper", routes.WhitepaperHandler)
+	http.HandleFunc("/token-paper", routes.TokenPaperHandler)
+	http.HandleFunc("/registry", routes.RegistryHandler)
 }
 
 // RefCapture checks for ?ref= param and sets a cookie

@@ -45,7 +45,7 @@ func LoadSharedTemplates(fs embed.FS) {
 func LoadPageTemplates(fs embed.FS) {
 	t := make(map[string]*template.Template)
 
-	for _, name := range []string{"index"} {
+	for _, name := range []string{"index", "whitepaper", "token-paper", "registry"} {
 		html := readFile(fs, "routes/"+name+".html")
 		if html == nil {
 			log.Printf("Failed to load %s", name)
@@ -125,4 +125,16 @@ func GetDevMode() bool {
 
 func IndexHandler(w http.ResponseWriter, r *http.Request) {
 	servePage(w, "index")
+}
+
+func WhitepaperHandler(w http.ResponseWriter, r *http.Request) {
+	servePage(w, "whitepaper")
+}
+
+func TokenPaperHandler(w http.ResponseWriter, r *http.Request) {
+	servePage(w, "token-paper")
+}
+
+func RegistryHandler(w http.ResponseWriter, r *http.Request) {
+	servePage(w, "registry")
 }

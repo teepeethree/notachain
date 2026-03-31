@@ -1,456 +1,250 @@
-<div class="content">
-    <nav>
-        <a href="/" class="wordmark">Notachain</a>
-        <div class="nav-links">
-            <a href="#problem">Problem</a>
-            <a href="#how">How it works</a>
-            <a href="#primitive">The primitive</a>
-            <a href="#economics">Economics</a>
-            <a href="#trust">Trust model</a>
-            <a href="#docs">Documents</a>
-            <a href="#join">Join</a>
-            <button
-                class="theme-toggle"
-                onclick="toggleTheme()"
-                aria-label="Toggle theme"
-            >
-                Dark
-            </button>
+<!-- HERO -->
+<div class="hero">
+    <div class="hero-label">A decentralised notarisation primitive</div>
+    <h1>
+        Prove anything about yourself on-chain.
+        <em>Without revealing who you are.</em>
+    </h1>
+    <p class="hero-sub">
+        Notachain lets credentialed legal professionals attest off-chain facts
+        on-chain. Each attestation is a boolean you own, you control, and you
+        earn from every time it's read.
+    </p>
+    <a href="#join" class="hero-cta">Join the conversation</a>
+</div>
+
+<hr class="divider" />
+
+<!-- PROBLEM / SOLUTION -->
+<div class="content-section fade-in" id="problem">
+    <div class="section-label">The gap</div>
+    <div class="ps-grid">
+        <div class="ps-item">
+            <h3>The problem</h3>
+            <p>
+                There is no standardised way for a person to privately
+                communicate verifiable facts about themselves to the blockchain.
+                Oracles bring market data on-chain. Nothing brings
+                <em>human</em> data on-chain &mdash; privately, verifiably, and
+                with real-world accountability.
+            </p>
         </div>
-    </nav>
-
-    <!-- HERO -->
-    <div class="hero">
-        <div class="hero-label">A decentralised notarisation primitive</div>
-        <h1>
-            Prove anything about yourself on-chain.
-            <em>Without revealing who you are.</em>
-        </h1>
-        <p class="hero-sub">
-            Notachain lets credentialed legal professionals attest off-chain
-            facts on-chain. Each attestation is a boolean you own, you control,
-            and you earn from every time it's read.
-        </p>
-        <a href="#join" class="hero-cta">Join the conversation</a>
-    </div>
-
-    <hr class="divider" />
-
-    <!-- PROBLEM / SOLUTION -->
-    <div class="content-section fade-in" id="problem">
-        <div class="section-label">The gap</div>
-        <div class="ps-grid">
-            <div class="ps-item">
-                <h3>The problem</h3>
-                <p>
-                    There is no standardised way for a person to privately
-                    communicate verifiable facts about themselves to the
-                    blockchain. Oracles bring market data on-chain. Nothing
-                    brings <em>human</em> data on-chain &mdash; privately,
-                    verifiably, and with real-world accountability.
-                </p>
-            </div>
-            <div class="ps-item">
-                <h3>The solution</h3>
-                <p>
-                    A credentialed legal professional verifies a fact about you
-                    and signs a boolean attestation on-chain. True or false.
-                    They face criminal consequences for lying. You face no
-                    identity exposure. The attestation lives forever, and you
-                    earn every time someone reads it.
-                </p>
-            </div>
+        <div class="ps-item">
+            <h3>The solution</h3>
+            <p>
+                A credentialed legal professional verifies a fact about you and
+                signs a boolean attestation on-chain. True or false. They face
+                criminal consequences for lying. You face no identity exposure.
+                The attestation lives forever, and you earn every time someone
+                reads it.
+            </p>
         </div>
     </div>
+</div>
 
-    <hr class="divider" />
+<hr class="divider" />
 
-    <!-- THE BOOLEAN PRIMITIVE -->
-    <section class="fade-in" id="primitive">
-        <div class="section-label">The primitive</div>
-        <div class="section-heading">
-            Every attestation reduces to a boolean
-        </div>
-        <p class="section-body">
-            Not "this person earns $85,000." Just
-            <em>"this person meets the income threshold."</em> True or false.
-            Signed by a credentialed professional. Stored on IPFS. Referenced
-            on-chain. Owned by you.
-        </p>
-        <p class="section-body">
-            Some booleans, once true, are true forever. You only prove them
-            once.
-        </p>
-
-        <div class="bool-grid">
-            <div class="bool-item">
-                <div class="bool-value">True &mdash; permanent</div>
-                <div class="bool-fact">
-                    "The holder of this wallet is over 18 years of age."
-                </div>
-                <div class="bool-meta">
-                    Notarised once. Valid forever. Earns on every read.
-                </div>
+<!-- THE BOOLEAN PRIMITIVE -->
+<section class="fade-in" id="primitive">
+    <div class="section-label">The primitive</div>
+    <div class="section-heading">Every attestation reduces to a boolean</div>
+    <p class="section-body">
+        Not "this person earns $85,000." Just
+        <em>"this person meets the income threshold."</em> True or false. Signed
+        by a credentialed professional. Stored on IPFS. Referenced on-chain.
+        Owned by you.
+    </p>
+    <p class="section-body">
+        Some booleans, once true, are true forever. You only prove them once.
+    </p>
+    <div class="bool-grid">
+        <div class="bool-item">
+            <div class="bool-value">True &mdash; permanent</div>
+            <div class="bool-fact">
+                "The holder of this wallet is over 18 years of age."
             </div>
-            <div class="bool-item">
-                <div class="bool-value">True &mdash; permanent</div>
-                <div class="bool-fact">
-                    "The holder of this wallet holds a university degree."
-                </div>
-                <div class="bool-meta">
-                    Notarised once. Valid forever. Earns on every read.
-                </div>
-            </div>
-            <div class="bool-item">
-                <div class="bool-value">True &mdash; temporal</div>
-                <div class="bool-fact">
-                    "The holder of this wallet uses air-gapped signing."
-                </div>
-                <div class="bool-meta">
-                    Re-attested annually. Earns until expiry.
-                </div>
-            </div>
-            <div class="bool-item">
-                <div class="bool-value">True &mdash; temporal</div>
-                <div class="bool-fact">
-                    "The holder of this wallet has no prior insurance claims."
-                </div>
-                <div class="bool-meta">
-                    Re-attested annually. Earns until expiry.
-                </div>
+            <div class="bool-meta">
+                Notarised once. Valid forever. Earns on every read.
             </div>
         </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- PULL QUOTE -->
-    <div class="pull-quote fade-in">
-        <blockquote>
-            Blockchains don't need to be trustless. They need trust to be
-            explicit, accountable, and verifiable.
-        </blockquote>
-        <cite>Notachain whitepaper</cite>
+        <div class="bool-item">
+            <div class="bool-value">True &mdash; permanent</div>
+            <div class="bool-fact">
+                "The holder of this wallet holds a university degree."
+            </div>
+            <div class="bool-meta">
+                Notarised once. Valid forever. Earns on every read.
+            </div>
+        </div>
+        <div class="bool-item">
+            <div class="bool-value">True &mdash; temporal</div>
+            <div class="bool-fact">
+                "The holder of this wallet uses air-gapped signing."
+            </div>
+            <div class="bool-meta">
+                Re-attested annually. Earns until expiry.
+            </div>
+        </div>
+        <div class="bool-item">
+            <div class="bool-value">True &mdash; temporal</div>
+            <div class="bool-fact">
+                "The holder of this wallet has no prior insurance claims."
+            </div>
+            <div class="bool-meta">
+                Re-attested annually. Earns until expiry.
+            </div>
+        </div>
     </div>
+</section>
 
-    <hr class="divider" />
+<hr class="divider" />
 
-    <!-- HOW IT WORKS -->
-    <section class="fade-in" id="how">
-        <div class="section-label">How it works</div>
-        <div class="section-heading">
-            Two data types. Three contracts. That's the whole protocol.
-        </div>
-        <div class="steps">
-            <div class="step">
-                <div class="step-num">01</div>
-                <div class="step-content">
-                    <h3>Legal professionals register on-chain</h3>
-                    <p>
-                        A solicitor, notary, or barrister generates a keypair
-                        and registers on the Notachain registry &mdash; linked
-                        to their credentials, licensing body, and jurisdiction.
-                        They stake $PRZ tokens against their registration. They
-                        do this once.
-                    </p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-num">02</div>
-                <div class="step-content">
-                    <h3>You make a declaration</h3>
-                    <p>
-                        You visit a registered professional &mdash; the same way
-                        you'd make a statutory declaration today. You declare
-                        the facts you need attested. They verify your evidence
-                        and witness your declaration.
-                    </p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-num">03</div>
-                <div class="step-content">
-                    <h3>A boolean goes on-chain</h3>
-                    <p>
-                        The professional signs the attestation with their
-                        registered key. The proof document lives on IPFS &mdash;
-                        self-contained and content-addressed. Only the hash and
-                        the signature go on-chain. The boolean is now yours.
-                    </p>
-                </div>
-            </div>
-            <div class="step">
-                <div class="step-num">04</div>
-                <div class="step-content">
-                    <h3>You earn every time it's read</h3>
-                    <p>
-                        Any protocol that needs to verify your boolean pays a
-                        read fee in $PRZ. The fee splits between you, the
-                        attestor, and a protocol burn. Your attestation is no
-                        longer a cost &mdash; it's a revenue-generating asset.
-                    </p>
-                </div>
-            </div>
-        </div>
-    </section>
+<!-- PULL QUOTE -->
+<div class="pull-quote fade-in">
+    <blockquote>
+        Blockchains don't need to be trustless. They need trust to be explicit,
+        accountable, and verifiable.
+    </blockquote>
+    <cite>Notachain whitepaper</cite>
+</div>
 
-    <hr class="divider" />
+<hr class="divider" />
 
-    <!-- ECONOMICS -->
-    <section class="fade-in" id="economics">
-        <div class="section-label">$PRZ token economics</div>
-        <div class="section-heading">
-            Everyone earns. The network self-corrects.
-        </div>
-        <p class="section-body">
-            The $PRZ token bootstraps the network, penalises fraud instantly,
-            and creates a self-correcting supply mechanism that becomes more
-            deflationary as the network matures.
-        </p>
-
-        <div class="econ-grid">
-            <div class="econ-card">
-                <h3>Wallet holders</h3>
-                <div class="econ-highlight">Earn from your own data</div>
-                <p>
-                    Every boolean you notarise earns $PRZ when protocols read
-                    it. The more useful your attestations, the more you earn.
-                    Your verified facts become income-generating assets.
-                </p>
-            </div>
-            <div class="econ-card">
-                <h3>Attestors</h3>
-                <div class="econ-highlight">Residual income forever</div>
-                <p>
-                    Legal professionals earn a share of every read fee on every
-                    attestation they've ever signed. Plus grants for early
-                    registration. Plus staking rewards. The incentive to join is
-                    economic, not ideological.
-                </p>
-            </div>
-            <div class="econ-card">
-                <h3>The protocol</h3>
-                <div class="econ-highlight">Self-correcting supply</div>
-                <p>
-                    An inverse sigmoid emission curve drives high rewards during
-                    growth, tapering as the network matures. Read fees and
-                    creation fees burn $PRZ proportionally to usage. The network
-                    becomes deflationary at scale.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- PRIVACY -->
-    <section class="fade-in">
-        <div class="section-label">Privacy by economics</div>
-        <div class="section-heading">The read fee is the privacy mechanism</div>
-        <p class="section-body">
-            Each boolean is individually harmless. But booleans compose &mdash;
-            enough of them together can fingerprint a person. The $2.50 read fee
-            makes individual queries cheap and rational. It makes bulk
-            surveillance prohibitively expensive.
-        </p>
-        <p class="section-body">
-            One insurer checking one boolean? $2.50. An adversary scraping 50
-            booleans across 10,000 wallets? $1.25 million. The economic model
-            and the privacy model reinforce each other.
-        </p>
-        <p class="section-body">
-            You control your exposure. Spread attestations across wallets.
-            Choose which facts to notarise. The protocol provides the incentives
-            and the tooling. The sovereignty is yours.
-        </p>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- STAKING -->
-    <section class="fade-in">
-        <div class="section-label">Two penalty timescales</div>
-        <div class="section-heading">Instant slashing. Then the law.</div>
-        <p class="section-body">
-            Every registered attestor stakes $PRZ against their registration.
-            Fraudulent attestation triggers immediate slashing &mdash; economic
-            loss in seconds. Then the legal system grinds forward: criminal
-            prosecution, loss of license, unlimited personal liability. Two
-            independent deterrents. Neither is sufficient alone. Together,
-            they're overwhelming.
-        </p>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- TRUST MODEL -->
-    <section class="fade-in" id="trust">
-        <div class="section-label">Trust model</div>
-        <div class="section-heading">
-            Anchored to centuries-old legal infrastructure
-        </div>
-        <p class="section-body">
-            Notachain doesn't invent a new trust system. It plugs into the one
-            that already exists &mdash; 92 national notariats, every law
-            society, every court commission. The accountability isn't tokenomic.
-            It's criminal law.
-        </p>
-
-        <div class="trust-tiers">
-            <div class="tier">
-                <div class="tier-label">Tier A</div>
-                <h3>Civil law notaries</h3>
-                <p>
-                    Government-appointed legal officers with quasi-judicial
-                    status. Their attestations are private judicial acts. 92
-                    member notariats through the UINL, covering 70% of the
-                    global population.
-                </p>
-            </div>
-            <div class="tier">
-                <div class="tier-label">Tier B</div>
-                <h3>Common law lawyer-notaries</h3>
-                <p>
-                    Solicitors, barristers, and commissioned notaries. Senior
-                    legal practitioners with professional liability,
-                    disciplinary oversight, and criminal exposure for
-                    facilitating false declarations.
-                </p>
-            </div>
-            <div class="tier">
-                <div class="tier-label">Tier C</div>
-                <h3>Administrative notaries</h3>
-                <p>
-                    Non-lawyer notaries with more limited attestation authority.
-                    May require multiple attestations for high-value
-                    applications. Still carry legal accountability for
-                    fraudulent conduct.
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- JURISDICTION COVERAGE -->
-    <section class="fade-in">
-        <div class="section-label">Global coverage at launch</div>
-        <div class="section-heading">
-            We've already mapped the legal infrastructure
-        </div>
-        <p class="section-body">
-            The Notachain Jurisdiction Registry catalogues licensing bodies
-            across every major legal tradition. Civil law notariats. Common law
-            societies. From the Conseil Sup&eacute;rieur du Notariat in France
-            to the Society of Notaries of New South Wales. Country by country.
-            Body by body.
-        </p>
-
-        <div class="stat-row">
-            <div class="stat">
-                <div class="stat-number">92</div>
-                <div class="stat-label">UINL member notariats</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">70%</div>
-                <div class="stat-label">Global population covered</div>
-            </div>
-            <div class="stat">
-                <div class="stat-number">6</div>
-                <div class="stat-label">Continents represented</div>
-            </div>
-        </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- FIRST APPLICATION -->
-    <section class="fade-in">
-        <div class="section-label">First application</div>
-        <div class="section-heading">Wallet insurance that actually works</div>
-        <p class="section-body">
-            Crypto insurance fails because underwriters can't price anonymous
-            risk. Notachain gives them the missing signal &mdash; attested
-            off-chain facts combined with on-chain behavioral history. Accurate
-            pricing. Real coverage. Claims adjudicated by reading the ledger,
-            not arguing about what happened.
-        </p>
-        <p class="section-body">
-            But insurance is just the first consumer. Any protocol that needs
-            verified off-chain facts &mdash; lending, credit, identity,
-            credentials, age-gating, procurement &mdash; can read Notachain
-            attestations as a trust primitive.
-        </p>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- PULL QUOTE 2 -->
-    <div class="pull-quote fade-in">
-        <blockquote>
-            Notachain is not a chain. It is the missing trust layer between the
-            chain and the world.
-        </blockquote>
-        <cite>Notachain whitepaper</cite>
+<!-- HOW IT WORKS -->
+<section class="fade-in" id="how">
+    <div class="section-label">How it works</div>
+    <div class="section-heading">
+        Two data types. Three contracts. That's the whole protocol.
     </div>
-
-    <hr class="divider" />
-
-    <!-- DOCUMENTS -->
-    <section class="fade-in" id="docs">
-        <div class="section-label">Read the documents</div>
-        <div class="section-heading">Three documents. One thesis.</div>
-
-        <div class="doc-grid">
-            <a href="/whitepaper" class="doc-card">
-                <div class="doc-type">Whitepaper v0.3</div>
-                <h3>Protocol Architecture</h3>
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">01</div>
+            <div class="step-content">
+                <h3>Legal professionals register on-chain</h3>
                 <p>
-                    The trust model, registry architecture, attestation layer,
-                    smart contract wallet design, and insurance protocol. The
-                    full technical specification.
+                    A solicitor, notary, or barrister generates a keypair and
+                    registers on the Notachain registry &mdash; linked to their
+                    credentials, licensing body, and jurisdiction. They stake
+                    $PRZ tokens against their registration. They do this once.
                 </p>
-            </a>
-            <a href="/token-paper" class="doc-card">
-                <div class="doc-type">Token Paper v0.2</div>
-                <h3>$PRZ Economics</h3>
-                <p>
-                    Token allocation, inverse sigmoid emission curve, burn
-                    mechanics, staking architecture, read-fee model, and privacy
-                    economics.
-                </p>
-            </a>
-            <a href="/jurisdiction-registry" class="doc-card">
-                <div class="doc-type">Registry v0.1</div>
-                <h3>Jurisdiction Registry</h3>
-                <p>
-                    Licensing bodies mapped across 90+ jurisdictions. Civil law
-                    notariats. Common law societies. Every Tier 1 body
-                    catalogued.
-                </p>
-            </a>
+            </div>
         </div>
-    </section>
-
-    <hr class="divider" />
-
-    <!-- CTA -->
-    <div class="cta-section fade-in" id="join">
-        <h2>This doesn't get built in isolation.</h2>
-        <p>
-            We need insurers, legal professionals, wallet holders, and builders
-            who see what's missing. Read the documents. Join the conversation.
-            Tell us what we're getting wrong.
-        </p>
-        <div class="cta-row">
-            <a href="/whitepaper" class="cta-primary">Read the whitepaper</a>
-            <a href="#" class="cta-secondary">Telegram &rarr;</a>
-            <a href="https://x.com/" target="_blank" class="cta-secondary"
-                >Twitter &rarr;</a
-            >
-            <a href="https://github.com/" target="_blank" class="cta-secondary"
-                >Github &rarr;</a
-            >
+        <div class="step">
+            <div class="step-num">02</div>
+            <div class="step-content">
+                <h3>You make a declaration</h3>
+                <p>
+                    You visit a registered professional &mdash; the same way
+                    you'd make a statutory declaration today. You declare the
+                    facts you need attested. They verify your evidence and
+                    witness your declaration.
+                </p>
+            </div>
         </div>
+        <div class="step">
+            <div class="step-num">03</div>
+            <div class="step-content">
+                <h3>A boolean goes on-chain</h3>
+                <p>
+                    The professional signs the attestation with their registered
+                    key. The proof document lives on IPFS &mdash; self-contained
+                    and content-addressed. Only the hash and the signature go
+                    on-chain. The boolean is now yours.
+                </p>
+            </div>
+        </div>
+        <div class="step">
+            <div class="step-num">04</div>
+            <div class="step-content">
+                <h3>You earn every time it's read</h3>
+                <p>
+                    Any protocol that needs to verify your boolean pays a read
+                    fee in $PRZ. The fee splits between you, the attestor, and a
+                    protocol burn. Your attestation is no longer a cost &mdash;
+                    it's a revenue-generating asset.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<hr class="divider" />
+
+<!-- ECONOMICS -->
+<section class="fade-in" id="economics">
+    <div class="section-label">$PRZ token economics</div>
+    <div class="section-heading">
+        Everyone earns. The network self-corrects.
+    </div>
+    <p class="section-body">
+        The $PRZ token bootstraps the network, penalises fraud instantly, and
+        creates a self-correcting supply mechanism that becomes more
+        deflationary as the network matures.
+    </p>
+    <div class="econ-grid">
+        <div class="econ-card">
+            <h3>Wallet holders</h3>
+            <div class="econ-highlight">Earn from your own data</div>
+            <p>
+                Every boolean you notarise earns $PRZ when protocols read it.
+                The more useful your attestations, the more you earn.
+            </p>
+        </div>
+        <div class="econ-card">
+            <h3>Attestors</h3>
+            <div class="econ-highlight">Residual income forever</div>
+            <p>
+                Legal professionals earn a share of every read fee on every
+                attestation they've ever signed. The incentive to join is
+                economic, not ideological.
+            </p>
+        </div>
+        <div class="econ-card">
+            <h3>The protocol</h3>
+            <div class="econ-highlight">Self-correcting supply</div>
+            <p>
+                An inverse sigmoid emission curve drives high rewards during
+                growth, tapering as the network matures. The network becomes
+                deflationary at scale.
+            </p>
+        </div>
+    </div>
+    <p class="section-body" style="margin-top: 2rem">
+        <a href="/token-paper" class="cta-secondary"
+            >Read the full token paper &rarr;</a
+        >
+    </p>
+</section>
+
+<hr class="divider" />
+
+<!-- PULL QUOTE 2 -->
+<div class="pull-quote fade-in">
+    <blockquote>
+        Notachain is not a chain. It is the missing trust layer between the
+        chain and the world.
+    </blockquote>
+    <cite>Notachain whitepaper</cite>
+</div>
+
+<hr class="divider" />
+
+<!-- CTA -->
+<div class="cta-section fade-in" id="join">
+    <h2>This doesn't get built in isolation.</h2>
+    <p>
+        We need insurers, legal professionals, wallet holders, and builders who
+        see what's missing. Read the documents. Join the conversation. Tell us
+        what we're getting wrong.
+    </p>
+    <div class="cta-row">
+        <a href="/whitepaper" class="cta-primary">Read the whitepaper</a>
+        <a href="#" class="cta-secondary">Telegram &rarr;</a>
+        <a href="https://x.com/" target="_blank" class="cta-secondary"
+            >Twitter &rarr;</a
+        >
+        <a href="https://github.com/" target="_blank" class="cta-secondary"
+            >Github &rarr;</a
+        >
     </div>
 </div>
