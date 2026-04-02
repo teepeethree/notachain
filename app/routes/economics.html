@@ -1,0 +1,680 @@
+<div class="doc-page">
+    <div class="doc-header">
+        <div class="section-label">Economics v0.3</div>
+        <h1 class="doc-title">Notachain Economics</h1>
+        <p class="doc-meta">
+            Working Paper &mdash; Draft for Discussion &mdash; Companion to the
+            <a href="/whitepaper">Notachain Whitepaper</a>
+        </p>
+    </div>
+
+    <div class="doc-body">
+        <h2>1. Introduction</h2>
+        <p>
+            The Notachain token ($NTC) is the native token of the Notachain
+            Protocol. It is deployed on an EVM-compatible chain as a standard
+            ERC-20 token.
+        </p>
+        <p>
+            $NTC is designed to do three things: bootstrap the network by
+            incentivising early attestor registration, create an immediate
+            economic penalty for fraudulent attestation that complements the
+            slower machinery of legal accountability, and generate revenue for
+            wallet holders and attestors through the read-fee mechanism.
+        </p>
+        <p>
+            This document assumes familiarity with the
+            <a href="/whitepaper">Notachain whitepaper</a>, which covers the
+            protocol architecture, trust model, and attestation layer.
+        </p>
+
+        <h2>2. Design Principles</h2>
+        <ul>
+            <li>
+                <strong>Incentivise participation, not idleness.</strong>
+                Emissions flow to participants who create value &mdash;
+                primarily attestors who register and actively sign attestations.
+            </li>
+            <li>
+                <strong>Algorithmic and verifiable.</strong> Emission and burn
+                rates are determined on-chain by network activity. No human
+                intervention required.
+            </li>
+            <li>
+                <strong>Self-correcting.</strong> Low activity triggers higher
+                emissions to stimulate growth. High activity triggers lower
+                emissions and increased burns to reward holders.
+            </li>
+            <li>
+                <strong>Accountable treasury.</strong> Every release is
+                published with a reason, hashed on-chain, and emitted as a
+                public event. No silent releases. No hidden movements.
+            </li>
+            <li>
+                <strong>Instant consequences.</strong> Staking creates an
+                immediate economic penalty in seconds. Legal liability follows
+                over months to years. Both are required.
+            </li>
+            <li>
+                <strong>Attestations earn.</strong> Wallet holders and attestors
+                earn $NTC every time a protocol reads an attestation. The read
+                fee aligns incentives, funds the ecosystem, and protects
+                privacy.
+            </li>
+            <li>
+                <strong>Published and auditable.</strong> All parameters &mdash;
+                curve values, treasury caps, staking thresholds, fee structures
+                &mdash; are on-chain.
+            </li>
+        </ul>
+
+        <h2>3. Core Function</h2>
+        <p>$NTC serves four functions within the protocol:</p>
+        <ol>
+            <li>
+                <strong>Staking and accountability.</strong> Attestors stake
+                $NTC against their registration. The stake is slashable for
+                proven fraudulent attestation, creating an immediate economic
+                penalty that operates in seconds.
+            </li>
+            <li>
+                <strong>Network bootstrapping.</strong> Grants denominated in
+                $NTC incentivise early registration of individual legal
+                professionals. A separate grant pool incentivises institutional
+                participants &mdash; licensing bodies, insurance companies, and
+                other stakeholders &mdash; to join the DAO.
+            </li>
+            <li>
+                <strong>Fee medium and burn.</strong> Attestation creation fees
+                and read fees are collected in $NTC. A portion of each fee is
+                permanently burned, creating deflationary pressure proportional
+                to network usage.
+            </li>
+            <li>
+                <strong>Read-fee settlement.</strong> $NTC is the medium through
+                which protocols pay for attestation access and through which
+                wallet holders and attestors receive their share of read
+                revenue.
+            </li>
+        </ol>
+        <p>
+            $NTC is not a governance token in the conventional sense. The
+            reference list of recognised licensing bodies is initially
+            maintained by the protocol entity based on publicly verifiable
+            institutional credentials. As institutional participants join the
+            DAO through token grants, governance progressively decentralises.
+            The protocol entity retains operational authority for time-sensitive
+            decisions but is accountable to the DAO through the on-chain audit
+            trail.
+        </p>
+
+        <h2>4. Token Allocation</h2>
+        <div class="doc-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Allocation</th>
+                        <th>%</th>
+                        <th>Purpose</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Attestor Grants</td>
+                        <td>30%</td>
+                        <td>
+                            Grants to individual legal professionals who
+                            register on the Notachain registry. Includes staking
+                            grants (see section 6.2).
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Institutional &amp; DAO Grants</td>
+                        <td>15%</td>
+                        <td>
+                            Grants to licensing bodies, insurance companies, and
+                            other institutional participants who join the DAO.
+                            Includes referral rewards for individuals who
+                            facilitate institutional registration.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Staking Reserves</td>
+                        <td>15%</td>
+                        <td>
+                            Reserved to fund staking requirements as the network
+                            scales beyond the initial grant pool.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Market Launch</td>
+                        <td>10%</td>
+                        <td>
+                            Initial liquidity pool pairing and exchange
+                            listings.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Team Vesting</td>
+                        <td>10%</td>
+                        <td>
+                            Quarterly over two years. Fixed. Not subject to
+                            acceleration.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Operational Budget</td>
+                        <td>10%</td>
+                        <td>
+                            Marketing, legal, infrastructure, partnerships.
+                            Quarterly with unspent tokens reverting to treasury.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Unallocated Treasury</td>
+                        <td>10%</td>
+                        <td>
+                            Reserved for future needs. Requires standard
+                            authorisation process for any release.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>4.1 Treasury Governance</h3>
+        <p>
+            Every action against the treasury &mdash; whether an authorisation,
+            movement, revocation, or cap adjustment &mdash; follows the standard
+            authorisation process:
+        </p>
+        <ol>
+            <li>A reason is published.</li>
+            <li>A hash of the reason is recorded on-chain.</li>
+            <li>A public event is emitted.</li>
+        </ol>
+        <p>
+            This process does not change, even if other rules in this document
+            are updated. Authorisation and movement are separate events.
+            Authorised tokens that have not yet been moved carry over between
+            quarters. Authorisations may be revoked if the need no longer
+            exists.
+        </p>
+
+        <h3>4.2 Spending Cap</h3>
+        <p>
+            The treasury enforces a global quarterly spending cap, adjustable
+            via the standard authorisation process. The full history of cap
+            changes is auditable via contract events.
+        </p>
+
+        <h3>4.3 Team Vesting</h3>
+        <p>
+            Equal quarterly instalments over two years from launch. Vested
+            tokens leave the treasury permanently. Fixed and not subject to
+            acceleration.
+        </p>
+
+        <h3>4.4 Budget Reversions</h3>
+        <p>
+            Unspent operational budget tokens revert to the treasury each
+            quarter &mdash; a soft deflationary mechanism.
+        </p>
+
+        <h2>5. Emission and Burn Model</h2>
+
+        <h3>5.1 The Inverse Sigmoid Emission Curve</h3>
+        <p>
+            The emission rate follows an inverse sigmoid as a function of the
+            Network Activity Metric (M) &mdash; a 90-day rolling average of
+            attestation volume on the Notachain Protocol. The 90-day window
+            smooths short-term volatility and resists manipulation.
+        </p>
+        <ul>
+            <li>
+                <strong>Low activity:</strong> emission rate at ceiling. Maximum
+                incentives for early participants.
+            </li>
+            <li>
+                <strong>Transition zone:</strong> the steepest part of the
+                curve. Most responsive to volume changes.
+            </li>
+            <li>
+                <strong>High activity:</strong> emission rate approaches floor.
+                Minimal new issuance. Network self-sustaining.
+            </li>
+        </ul>
+        <p>
+            Mathematical form: I = floor + (ceiling &minus; floor) / (1 + e^(k
+            &times; (M &minus; midpoint)))
+        </p>
+        <p>
+            Where k controls the steepness of the transition and midpoint
+            defines what "healthy attestation volume" means for the protocol.
+        </p>
+
+        <h3>5.2 The Linear Burn</h3>
+        <p>
+            Burns are linear with activity. Both attestation creation fees and
+            read fees contribute to the burn. The fees serve as a natural
+            defence against attestation farming &mdash; emissions must exceed
+            the fee cost for gaming to be profitable.
+        </p>
+
+        <h3>5.3 Interaction</h3>
+        <p>Both mechanisms operate simultaneously and amplify each other:</p>
+        <ul>
+            <li>
+                <strong>Low volume:</strong> high emissions, low burns. Growth
+                mode. Net inflationary.
+            </li>
+            <li>
+                <strong>Crossover point:</strong> emissions equal burns. Supply
+                stable.
+            </li>
+            <li>
+                <strong>High volume:</strong> low emissions, high burns.
+                Deflationary. Network self-sustaining.
+            </li>
+        </ul>
+
+        <h3>5.4 Guardrails</h3>
+        <ul>
+            <li>
+                <strong>Emission ceiling:</strong> the emission rate can never
+                exceed the ceiling, regardless of how low activity falls.
+                Prevents runaway inflation during prolonged downturns.
+            </li>
+            <li>
+                <strong>Emission floor:</strong> the emission rate never drops
+                below the floor. Ensures some minimum incentive always exists.
+            </li>
+            <li>
+                <strong>90-day rolling average:</strong> prevents short-term
+                volume spikes from manipulating the emission rate.
+            </li>
+            <li>
+                <strong>Treasury awareness:</strong> treasury releases during
+                net inflationary periods face a higher bar for justification.
+            </li>
+        </ul>
+
+        <h2>6. Staking Architecture</h2>
+
+        <h3>6.1 Two Penalty Timescales</h3>
+        <div class="doc-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Mechanism</th>
+                        <th>Timescale</th>
+                        <th>Severity</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Token slashing</td>
+                        <td>Seconds</td>
+                        <td>Economic loss of staked $NTC</td>
+                    </tr>
+                    <tr>
+                        <td>Legal accountability</td>
+                        <td>Months to years</td>
+                        <td>
+                            Criminal prosecution, loss of license, unlimited
+                            personal liability
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+        <p>
+            Independent and reinforcing. Staking without legal liability is just
+            another DeFi slashing mechanism. Legal liability without staking
+            leaves a gap during the months before proceedings conclude. Both are
+            required.
+        </p>
+
+        <h3>6.2 Staking Grants</h3>
+        <p>
+            Early attestors receive their stake as part of their registration
+            grant. However, the grant is staked directly into the registry
+            contract on their behalf &mdash; it is not sent to their wallet. The
+            attestor cannot sell or transfer the staked tokens.
+        </p>
+        <p>
+            The stake progressively vests over time as the attestor remains
+            active and in good standing. A portion of the stake unlocks at
+            defined intervals (e.g. quarterly over two years). Unlocked tokens
+            can be withdrawn or re-staked at the attestor's discretion.
+        </p>
+        <p>This structure ensures that:</p>
+        <ul>
+            <li>
+                The attestor has immediate skin in the game from day one without
+                purchasing tokens.
+            </li>
+            <li>The grant cannot be immediately dumped on the market.</li>
+            <li>
+                Long-term, active attestors are rewarded with progressively
+                liquid stakes.
+            </li>
+            <li>
+                An attestor who deregisters early forfeits unvested stake, which
+                returns to the grant pool.
+            </li>
+        </ul>
+
+        <h3>6.3 Self-Funded Staking</h3>
+        <p>
+            Attestors who register after the grant pool is exhausted &mdash; or
+            who wish to register at a higher stake than the grant provides
+            &mdash; purchase and stake $NTC themselves. The minimum stake
+            requirement remains the same regardless of funding source.
+        </p>
+
+        <h3>6.4 Slashing Conditions</h3>
+        <ul>
+            <li>
+                <strong>Proven fraud:</strong> knowingly signing a false
+                statement. Full slashing (both vested and unvested).
+            </li>
+            <li>
+                <strong>Negligence:</strong> failure to perform reasonable
+                verification before signing. Partial slashing.
+            </li>
+            <li>
+                <strong>Key compromise without disclosure:</strong> failure to
+                report compromise and initiate rotation within a reasonable
+                period. Partial slashing.
+            </li>
+        </ul>
+
+        <h3>6.5 Dispute Resolution</h3>
+        <p>
+            An affected party files an on-chain dispute against a specific
+            attestation, posting a dispute bond in $NTC. The attestor's stake is
+            frozen pending resolution. A cross-jurisdictional panel of other
+            registered attestors reviews the evidence.
+        </p>
+        <ul>
+            <li>
+                If upheld: the attestor's stake is slashed and distributed to
+                the dispute filer and the panel. The dispute bond is returned.
+            </li>
+            <li>
+                If rejected: the dispute bond is slashed and distributed to the
+                attestor and the panel. The attestor's stake is unfrozen.
+            </li>
+        </ul>
+        <p>
+            The bond requirement prevents frivolous accusations. The
+            cross-jurisdictional panel requirement prevents collusion within a
+            single legal community.
+        </p>
+
+        <h3>6.6 Slashed Token Destination</h3>
+        <p>
+            Slashed tokens can be burned (permanent deflation) or redirected to
+            the insurance pool (reimbursement), depending on the dispute type.
+            The split ratio is a parameter of the dispute resolution mechanism
+            and may vary.
+        </p>
+
+        <h2>7. Read-Fee Model</h2>
+
+        <h3>7.1 Attestations as Assets</h3>
+        <p>
+            Every time a protocol reads an attestation blob, they pay a read fee
+            in $NTC. The fee splits three ways:
+        </p>
+        <ol>
+            <li>
+                <strong>The wallet holder</strong> &mdash; compensation for
+                privacy exposure and incentive to notarise facts.
+            </li>
+            <li>
+                <strong>The attestor</strong> &mdash; residual income for
+                ongoing reputational and legal risk.
+            </li>
+            <li>
+                <strong>The protocol burn</strong> &mdash; deflationary
+                mechanism proportional to attestation demand.
+            </li>
+        </ol>
+
+        <h3>7.2 Incentive Inversion</h3>
+        <p>
+            Without read fees, attestation is a cost borne reluctantly because
+            some protocol requires it. With read fees, attestation is an
+            investment &mdash; every boolean you notarise is a potential income
+            stream. Wallet holders are incentivised to notarise every provable
+            fact about themselves. Attestors build portfolios of signed
+            attestations generating residual income in perpetuity.
+        </p>
+
+        <h3>7.3 The Privacy Tax</h3>
+        <p>
+            Each boolean is individually harmless. But booleans compose &mdash;
+            enough together can fingerprint a person. The read fee makes
+            individual queries cheap and rational while making bulk surveillance
+            prohibitively expensive.
+        </p>
+        <p>
+            One insurer checking one boolean: $2.50. An adversary scraping 50
+            booleans across 10,000 wallets: $1.25 million. The economic model
+            and the privacy model reinforce each other.
+        </p>
+
+        <h3>7.4 Pricing</h3>
+        <div class="doc-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Parameter</th>
+                        <th>Value</th>
+                        <th>Rationale</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Base read fee</td>
+                        <td>$2.50 equivalent in $NTC</td>
+                        <td>
+                            Accessible for single queries. Negligible against
+                            policy or loan value.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Scaling mechanism</td>
+                        <td>
+                            Escalating per additional boolean on same wallet in
+                            same session
+                        </td>
+                        <td>
+                            Makes comprehensive profiling increasingly
+                            expensive.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Wallet holder share</td>
+                        <td>[TBD]%</td>
+                        <td>Compensation for privacy exposure.</td>
+                    </tr>
+                    <tr>
+                        <td>Attestor share</td>
+                        <td>[TBD]%</td>
+                        <td>Residual income for ongoing risk.</td>
+                    </tr>
+                    <tr>
+                        <td>Protocol burn</td>
+                        <td>[TBD]%</td>
+                        <td>Deflationary mechanism.</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h3>7.5 User Sovereignty</h3>
+        <p>
+            Wallet holders are warned that boolean intersections narrow
+            anonymity sets. The protocol encourages distributing attestations
+            across multiple wallets. Escalating read fees compensate for
+            increased privacy exposure when multiple booleans on a single wallet
+            are read.
+        </p>
+
+        <h3>7.6 Supply Impact</h3>
+        <p>
+            Read-fee burns scale with the installed base of attestations, not
+            just the rate of new creation. A mature network with millions of
+            existing booleans queried thousands of times daily generates
+            substantial burn volume even if new attestation creation slows. The
+            network becomes more deflationary as it matures.
+        </p>
+
+        <h2>8. Institutional Incentives</h2>
+
+        <h3>8.1 DAO Grants</h3>
+        <p>
+            The institutional grant pool incentivises licensing bodies,
+            insurance companies, and other stakeholders to join the Notachain
+            DAO. Registration as a DAO participant requires an institutional
+            identity and a commitment to governance participation.
+        </p>
+
+        <h3>8.2 Referral Rewards</h3>
+        <p>
+            When an individual facilitates the on-chain registration of an
+            institutional participant:
+        </p>
+        <ul>
+            <li>
+                The institution receives a grant from the institutional pool.
+            </li>
+            <li>The individual receives a referral reward.</li>
+            <li>
+                The institution credits the individual for facilitating the
+                registration.
+            </li>
+        </ul>
+        <p>
+            This creates a network effect where participants are economically
+            incentivised to recruit institutions, and institutions are
+            economically incentivised to join because the grant is meaningful
+            and the governance authority is real.
+        </p>
+
+        <h2>9. Token Lifecycle</h2>
+        <div class="doc-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Source</th>
+                        <th>Mechanism</th>
+                        <th>Effect on Supply</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Treasury releases</td>
+                        <td>Human-authorised, cap-limited</td>
+                        <td>Increases circulating</td>
+                    </tr>
+                    <tr>
+                        <td>Emissions</td>
+                        <td>Inverse sigmoid, 90-day rolling</td>
+                        <td>Increases total + circulating</td>
+                    </tr>
+                    <tr>
+                        <td>Creation-fee burns</td>
+                        <td>Linear, from attestation fees</td>
+                        <td>Permanently decreases total</td>
+                    </tr>
+                    <tr>
+                        <td>Read-fee burns</td>
+                        <td>Linear, from read fees</td>
+                        <td>Permanently decreases total</td>
+                    </tr>
+                    <tr>
+                        <td>Staking locks</td>
+                        <td>Step function per registration</td>
+                        <td>Decreases available circulating</td>
+                    </tr>
+                    <tr>
+                        <td>Stake vesting</td>
+                        <td>Progressive unlock for active attestors</td>
+                        <td>Increases available circulating over time</td>
+                    </tr>
+                    <tr>
+                        <td>Slashing (burn)</td>
+                        <td>Dispute resolution</td>
+                        <td>Permanently decreases total</td>
+                    </tr>
+                    <tr>
+                        <td>Slashing (redistribute)</td>
+                        <td>Dispute resolution</td>
+                        <td>Neutral (moves between holders)</td>
+                    </tr>
+                    <tr>
+                        <td>Read-fee revenue</td>
+                        <td>Per-read to holder + attestor</td>
+                        <td>Neutral (redistribution)</td>
+                    </tr>
+                    <tr>
+                        <td>Team vesting</td>
+                        <td>Quarterly over two years</td>
+                        <td>Increases circulating</td>
+                    </tr>
+                    <tr>
+                        <td>Budget reversions</td>
+                        <td>Unspent returns quarterly</td>
+                        <td>Decreases circulating</td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+
+        <h2>10. Open Questions</h2>
+        <ul>
+            <li>Total supply and initial price</li>
+            <li>
+                Curve parameters calibrated against expected attestation volumes
+            </li>
+            <li>Staking amounts by tier (Tier A, B, C minimums)</li>
+            <li>
+                Staking grant vesting schedule (quarterly over two years, or
+                different cadence)
+            </li>
+            <li>Dispute resolution panel composition and evidence standards</li>
+            <li>Unbonding period duration</li>
+            <li>
+                Network Activity Metric definition (attestation count, value,
+                unique attestors, or weighted composite)
+            </li>
+            <li>Read-fee split ratios (wallet holder / attestor / burn)</li>
+            <li>Read-fee escalation curve for multiple reads on same wallet</li>
+            <li>
+                Access gating mechanism (encrypted IPFS vs smart-contract
+                gateway)
+            </li>
+            <li>
+                Re-attestation cadence standards for common temporal boolean
+                categories
+            </li>
+            <li>Referral reward amounts and conditions</li>
+            <li>
+                Chain selection (Ethereum mainnet, Arbitrum, Base, or other L2)
+            </li>
+        </ul>
+
+        <p class="doc-disclaimer">
+            <em
+                >This document is a working draft for discussion purposes.
+                Nothing herein constitutes financial, legal, or investment
+                advice. $NTC tokens, if and when issued, may have no value and
+                should not be purchased as a speculative investment.</em
+            >
+        </p>
+    </div>
+</div>

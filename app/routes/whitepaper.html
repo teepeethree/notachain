@@ -2,8 +2,7 @@
     <div class="doc-header">
         <div class="section-label">Whitepaper v0.3</div>
         <h1 class="doc-title">
-            A Protocol for Legally-Anchored On-Chain Attestations and
-            Cryptographically-Underwritten Digital Asset Insurance
+            Notachain: A Protocol for Legally-Anchored On-Chain Attestations
         </h1>
         <p class="doc-meta">Working Paper &mdash; Draft for Discussion</p>
     </div>
@@ -13,276 +12,270 @@
         <p>
             Notachain is a protocol that brings private judicial authority
             on-chain. By enabling credentialed legal professionals &mdash;
-            notaries, solicitors, barristers, and judicial officers &mdash; to
-            register cryptographic keypairs on a public, immutable registry,
-            Notachain creates a class of attestations backed by the full weight
-            of institutional legal accountability. These attestations serve as
-            the trust foundation for a new generation of on-chain financial
-            products.
+            notaries, attorneys, solicitors, barristers, and judicial officers
+            &mdash; to register cryptographic keypairs on a public, immutable
+            registry, Notachain creates a class of attestations backed by the
+            full weight of institutional legal accountability.
         </p>
         <p>
-            The protocol's primary application is the underwriting of digital
-            asset insurance &mdash; specifically, wallet drain coverage. Current
-            crypto insurance products are either non-existent for individual
-            users or prohibitively expensive due to the inability to accurately
-            price anonymous, off-chain risk. Notachain resolves this by
-            combining: (1) a legally-anchored attestation layer for
-            minimum-disclosure underwriting, (2) smart contract wallet
-            architecture with behavioral guardrails, (3) ZK proofs for
-            privacy-preserving risk disclosure, and (4) on-chain forensics for
-            transparent claims adjudication.
-        </p>
-        <p>
-            The result is a system in which the transparency of blockchain
-            &mdash; typically considered a privacy liability &mdash; becomes the
-            primary instrument of fraud prevention, enabling insurance products
-            that are more verifiable and more fraud-resistant than their
-            traditional counterparts.
+            These attestations are boolean: true or false. A credentialed
+            professional verifies an off-chain fact, signs a minimum-disclosure
+            attestation, and publishes it on-chain. The wallet holder's identity
+            is never exposed. The attestation is owned by the wallet holder and
+            can be consumed by any protocol that needs verified off-chain facts.
         </p>
 
         <h2>1. The Problem</h2>
 
-        <h3>
-            1.1 Crypto Adoption is Blocked by Missing Protection Infrastructure
-        </h3>
+        <h3>1.1 The Missing Primitive</h3>
         <p>
-            Mass adoption of digital assets is structurally impeded not by lack
-            of interest, but by lack of protection. Traditional financial
-            systems derive their user confidence from a layered stack of
-            safeguards: deposit insurance, fraud reversal mechanisms,
-            institutional custody, and legal recourse. Crypto currently offers
-            none of these to individual users.
+            Oracles solved the problem of bringing market data on-chain. Price
+            feeds, weather data, sports results &mdash; there is
+            well-established infrastructure for external data that exists
+            independently of any individual.
         </p>
         <p>
-            When a wallet is drained &mdash; through phishing, malware,
-            clipboard hijacking, or social engineering &mdash; recovery is
-            functionally impossible. Transactions are irreversible. Attackers
-            are pseudonymous. There is no equivalent of a chargeback. The user
-            simply loses.
+            There is no equivalent for human data. There is no standardised way
+            for a person to prove a fact about themselves on-chain without
+            either revealing their identity entirely or trusting a centralised
+            intermediary that becomes a single point of failure.
         </p>
         <p>
-            This is not a fringe risk. Private key compromise is consistently
-            cited by on-chain analytics firms as the leading cause of individual
-            crypto theft. The attack surface is almost entirely off-chain:
-            malicious browser extensions, fake wallet connection prompts,
-            compromised clipboards, and social engineering.
+            This blocks entire categories of on-chain products. Insurance
+            underwriters cannot price individual risk because wallets are
+            pseudonymous. Lending protocols cannot offer undercollateralised
+            loans because creditworthiness cannot be verified. Age-gating,
+            credential verification, and professional licensing all require
+            off-chain facts that the chain cannot discover on its own.
         </p>
 
-        <h3>1.2 Existing Insurance Products Fail the Individual User</h3>
+        <h3>1.2 The G&ouml;del Constraint</h3>
         <p>
-            The nascent crypto insurance market exists almost exclusively for
-            institutional custodians, exchanges, and protocol treasuries.
-            Products covering individual wallet holders are either unavailable
-            or priced at rates that make coverage irrational.
-        </p>
-        <p>
-            The root cause is underwriting failure. Traditional insurance prices
-            risk against identity: age, history, behaviour, verified
-            credentials. Crypto wallets are pseudonymous. Underwriters, unable
-            to price the actual risk profile of a specific wallet holder,
-            default to worst-case assumptions and charge accordingly. A product
-            charging 10-30% of asset value as an annual premium is not a product
-            &mdash; it is a deterrent.
-        </p>
-        <p>
-            What is needed is a mechanism to accurately price anonymous on-chain
-            risk. This requires bridging off-chain behavioural data &mdash; the
-            signals that actually predict wallet drain events &mdash; into a
-            form that is cryptographically verifiable, privacy-preserving, and
-            legally accountable.
+            This is not a feature gap. It is a logical constraint. A system
+            cannot verify statements about itself from within itself. A
+            blockchain can record what wallets did. It cannot verify who
+            controls them or what they do off-chain. At some point, an external
+            input is required &mdash; and that input must come from someone
+            accountable.
         </p>
 
-        <h3>1.3 The On-Chain Transparency Paradox</h3>
+        <h3>1.3 The On-Chain Transparency Advantage</h3>
         <p>
-            Blockchain is often framed as a privacy liability. In insurance, it
-            is the opposite. On-chain transaction history is perfectly recorded,
-            immutable, and publicly verifiable. Every approval, every
+            Blockchain is often framed as a privacy liability. For verification,
+            it is the opposite. On-chain transaction history is perfectly
+            recorded, immutable, and publicly verifiable. Every approval, every
             interaction, every destination address is timestamped and permanent.
         </p>
         <p>
             This transparency creates a forensic foundation that traditional
-            insurance cannot match. A car insurer reconstructs events from
-            testimony. An on-chain insurer reads them directly from the ledger.
-            The primary remaining challenge is not fraud detection on-chain
-            &mdash; it is verifying the off-chain behaviour that precedes drain
-            events.
+            systems cannot match. The remaining challenge is not verifying what
+            happened on-chain &mdash; it is verifying the off-chain facts that
+            precede and contextualise on-chain events.
         </p>
 
-        <h2>2. Protocol Architecture</h2>
+        <h2>2. The Boolean Attestation</h2>
 
-        <h3>2.1 Overview</h3>
+        <h3>2.1 Structure</h3>
         <p>
-            Notachain operates across four interconnected layers: the Notary
-            Registry (an on-chain registry of credentialed notary public keys),
-            the Attestation Layer (ZK-proof-bearing declarations signed by
-            registered notaries), the Smart Contract Wallet (ERC-4337 account
-            abstraction with behavioral guardrails), and the Insurance Protocol
-            (underwriting and claims logic anchored to attestation data).
+            Every Notachain attestation reduces to a boolean. Not "this person
+            earns $85,000" but "this person meets the income threshold." True or
+            false. Signed by a credentialed professional. The proof document
+            lives on IPFS &mdash; self-contained and content-addressed. Only the
+            hash and the signature go on-chain.
         </p>
 
-        <h3>2.2 The Notary Registry</h3>
+        <h3>2.2 Monotonic and Temporal Booleans</h3>
+        <p>
+            Some booleans, once true, are true forever. A date of birth
+            threshold cannot become false. A historical fact &mdash; "this
+            person held citizenship on this date" &mdash; is permanently true at
+            its timestamp regardless of what happens later. These are notarised
+            once and remain valid for the lifetime of the wallet.
+        </p>
+        <p>
+            Other booleans are temporal &mdash; they may change over time.
+            Employment status, security practices, claim history, educational
+            credentials. These require periodic re-attestation. The
+            re-attestation cadence is not set by the protocol &mdash; it is
+            determined by whatever consuming protocol requires the data. An
+            insurer may require annual re-attestation of security practices. A
+            lender may require quarterly income verification.
+        </p>
+
+        <h3>2.3 Two Legal Traditions, Two Attestation Anatomies</h3>
+        <p>
+            In civil law jurisdictions &mdash; continental Europe, Latin
+            America, East Asia, and much of Africa &mdash; the notary owns the
+            attestation. They are not witnessing someone else's declaration.
+            They are making their own. A French notaire or German Notar is
+            appointed by the state, often for life. Their authenticated
+            instruments carry prima facie evidentiary weight in court and are
+            enforceable without further proceedings. Their liability is total
+            and undivided.
+        </p>
+        <p>
+            In common law jurisdictions &mdash; the United States, the United
+            Kingdom, Canada, Australia, and others &mdash; the legal
+            professional is the conduit, not the testator. The wallet holder
+            makes the declaration. The attorney, solicitor, barrister, or notary
+            witnesses it &mdash; verifying identity, confirming the declaration
+            was made voluntarily and knowingly. The truth of the underlying
+            claim belongs to the wallet holder. The professional's liability is
+            for knowingly facilitating a false one, which is a criminal offence.
+        </p>
+        <p>
+            The attestation structure is identical. The legal accountability
+            underneath is different. This distinction is reflected in the
+            Notachain trust tier system.
+        </p>
+
+        <h2>3. Protocol Architecture</h2>
+
+        <h3>3.1 Overview</h3>
+        <p>
+            Notachain operates as a set of smart contracts on an existing
+            EVM-compatible chain. No new chain. No new consensus mechanism. The
+            protocol needs immutability, public auditability, and smart contract
+            execution &mdash; all of which an existing EVM provides.
+        </p>
+        <p>
+            The protocol comprises three core components: the Registry, the
+            Attestation Layer (request-response architecture), and proof
+            documents stored on IPFS.
+        </p>
+
+        <h3>3.2 The Registry</h3>
         <p>
             The registry is a public, immutable on-chain record mapping
             credentialed legal professional public keys to their credentials:
-            jurisdiction, licensing body, contact details, and registration
-            timestamp.
+            jurisdiction, licensing body, contact details, registration
+            timestamp, and trust tier classification.
         </p>
 
-        <h4>Who Qualifies as a Notachain Notary</h4>
+        <h4>Who qualifies</h4>
         <p>
-            Notachain uses the term "notary" broadly to mean any credentialed
+            Notachain uses the term "attestor" broadly to mean any credentialed
             legal professional with attestation authority, professional
             accountability, and legal liability for fraudulent conduct. This
-            includes civil law notaries (government-appointed legal officers
-            with quasi-judicial status), common law notaries public (senior
-            legal practitioners commissioned by a court or state authority),
-            solicitors and barristers (licensed legal practitioners with
-            professional bodies capable of disciplinary action), and judicial
-            officers and registrars (officers of the court with existing
-            attestation authority).
-        </p>
-        <p>
-            What qualifies a participant is not the job title but the
-            accountability structure: a recognised licensing body with real
-            disciplinary power, personal legal liability for fraudulent
-            attestation, and publicly verifiable credentials.
+            includes civil law notaries, attorneys, solicitors, barristers,
+            common law notaries public, and judicial officers. What qualifies a
+            participant is not the job title but the accountability structure: a
+            recognised licensing body with real disciplinary power, personal
+            legal liability, and publicly verifiable credentials.
         </p>
 
-        <h4>Civil Law vs Common Law: A Critical Distinction</h4>
+        <h4>Self-registration</h4>
         <p>
-            In civil law jurisdictions &mdash; continental Europe, Latin
-            America, East Asia, and much of Africa &mdash; the notary is best
-            understood as a private judge for non-contentious matters. A French
-            notaire or German Notar is appointed by the state, often for life,
-            to a specific territory. They draft legal instruments themselves.
-            Their authenticated instruments carry prima facie evidentiary weight
-            in court and are enforceable without further proceedings. They hold
-            unlimited personal liability for errors.
+            Individual professionals self-register on the Notachain registry.
+            They generate an asymmetric keypair, retaining the private key under
+            exclusive physical control, and submit their public key alongside
+            verifiable credential metadata to the registry contract. They
+            declare their licensing body, jurisdiction, and professional
+            credentials.
         </p>
         <p>
-            In common law jurisdictions &mdash; Australia, the UK, Canada, the
-            United States &mdash; notaries have a more limited administrative
-            role: primarily identity verification and signature witnessing.
-            Their attestations carry the weight of a professional declaration,
-            not a judicial instrument. Notable exceptions: England &amp; Wales
-            notaries hold significant international document authority, and NSW
-            notaries are senior solicitors with a formal court commission.
-        </p>
-        <p>
-            This distinction is reflected in the Notachain trust tier system.
-            Civil law notary attestations carry Tier A weight &mdash; the
-            equivalent of a private judicial act. Common law lawyer-notaries
-            carry Tier B weight. Administrative notaries without legal
-            qualifications carry Tier C weight and may require multiple
-            attestations for high-value underwriting.
+            The registry does not verify credentials itself. Trust is
+            established through two orthogonal mechanisms: cryptographic (the
+            signature is unforgeable without the private key) and legal
+            (impersonating a licensed professional is a criminal offence in
+            every jurisdiction). Out-of-band verification is always available
+            &mdash; anyone can confirm an attestor's credentials by checking the
+            public register of their licensing body.
         </p>
 
-        <h4>The International Union of Notaries (UINL)</h4>
+        <h4>Recognised licensing bodies</h4>
         <p>
-            The UINL, founded in 1948, currently comprises 92 member notariats
-            across four continents, representing approximately 70% of the global
-            population. The UINL is designated as a Meta-Tier 1 body under the
-            Notachain Protocol. Any national notariat holding current UINL
-            membership is automatically eligible for Tier 1 listing on the
-            registry.
+            The protocol maintains a reference list of recognised licensing
+            bodies. This includes all civil law notariats that are members of
+            the International Union of Notaries (UINL) &mdash; 92 member
+            notariats representing approximately 70% of the global population
+            &mdash; and approved common law professional bodies such as bar
+            associations, law societies, and notarial societies.
+        </p>
+        <p>
+            This list is initially maintained by the Notachain protocol entity.
+            It is published on-chain, fully auditable, and subject to
+            progressive decentralisation through the Notachain DAO as
+            institutional participants join the governance structure.
         </p>
 
-        <h4>Two-Tier Registry Architecture</h4>
+        <h4>The protocol entity</h4>
         <p>
-            The registry operates across two tiers. Tier 1 comprises licensing
-            bodies: recognised regulatory and professional bodies that license,
-            commission, or govern notarial participants. Tier 2 comprises
-            individual notaries: credentialed legal professionals who
-            self-register their keypairs under a recognised Tier 1 licensing
-            body.
+            The protocol entity serves as the actor of last resort. At launch,
+            it maintains the reference list of recognised licensing bodies,
+            handles key rotation requests, manages operational decisions, and
+            processes emergency actions. Individual professionals do not need to
+            wait for their licensing body to participate in order to register
+            &mdash; the protocol entity verifies their credentials directly.
+        </p>
+        <p>
+            As the network matures and institutional participants &mdash;
+            licensing bodies, insurance companies, and other stakeholders
+            &mdash; join the DAO through token grants, governance authority
+            progressively migrates from the entity to the DAO. The entity's role
+            diminishes over time by design.
         </p>
 
-        <h4>Root of Trust</h4>
+        <h4>Key rotation</h4>
         <p>
-            The Tier 1 licensing body list is an axiomatic position &mdash; it
-            cannot be derived from first principles and must be set by Notachain
-            as the protocol foundation. This is a deliberate and acknowledged
-            centralisation. However, the licensing bodies themselves are
-            publicly verifiable real-world institutions that are not invented by
-            Notachain, and the registry is on-chain, making any addition or
-            removal fully auditable and forkable by the community.
+            In the event an attestor loses access to their signing keypair,
+            rotation requires identity verification through the appropriate
+            formal process recognised by their jurisdiction and licensing body.
+            The protocol entity processes rotation requests as the actor of last
+            resort. Where a licensing body has registered on-chain as a DAO
+            participant, it may take over rotation authority for its own
+            members.
         </p>
         <p>
-            Notachain controls who is on the Tier 1 list. Notachain does not
-            control what those institutions attest. The trust is architectural,
-            not operational.
-        </p>
-
-        <h4>Registration Flow</h4>
-        <p>
-            A credentialed legal professional generates an asymmetric keypair,
-            retaining the private key under their exclusive physical control.
-            They submit their public key alongside verifiable credential
-            metadata to the registry smart contract. The submission is permanent
-            and publicly auditable.
-        </p>
-        <p>
-            Trust is established through two orthogonal mechanisms:
-            cryptographic (any attestation signed by the participant's private
-            key is unforgeable without physical compromise of that key) and
-            legal (impersonating a licensed professional or submitting
-            fraudulent credentials exposes the actor to criminal liability).
+            The security model for rotation is consistent with the security
+            model for registration: institutional legitimacy verified through
+            real-world processes that an international attacker cannot easily
+            subvert.
         </p>
 
-        <h4>Key Rotation</h4>
+        <h4>DAO governance</h4>
         <p>
-            Key rotation requires a countersigned rotation request from the Tier
-            1 licensing body, submitted via in-person statutory declaration. The
-            physical presence requirement is mandatory &mdash; an international
-            attacker cannot fake physical presence before a licensing body.
+            The long-term governance model is progressive decentralisation. The
+            DAO grant pool incentivises institutional participation. When a
+            licensing body registers on-chain, it receives a token grant. The
+            individual who facilitated that registration receives a referral
+            reward. This creates a network effect where participants are
+            economically incentivised to recruit institutions, and institutions
+            are economically incentivised to join.
+        </p>
+        <p>
+            Over time, the DAO &mdash; composed of licensing bodies, insurance
+            companies, and other institutional stakeholders &mdash; governs the
+            reference list of recognised bodies, protocol parameters, and
+            treasury releases. The protocol entity retains operational authority
+            for time-sensitive decisions but is accountable to the DAO through
+            the on-chain audit trail.
         </p>
 
-        <h4>Registry Governance</h4>
+        <h3>3.3 The Attestation Layer</h3>
+
+        <h4>Request-response architecture</h4>
         <p>
-            The registry infrastructure is operated by the Notachain protocol
-            company, which provides tooling for registration, key rotation, and
-            credential updates. Critically, the registry itself is on-chain. If
-            the company ceases to operate, the registry persists in perpetuity.
-            No attestation is retroactively invalidated. The trust assumption is
-            architectural, not operational.
+            The attestation layer is a request-response protocol on an immutable
+            ledger. Someone needs a fact attested. They make a request. A
+            credentialed professional verifies the fact and signs a response.
+            Both are on-chain, permanent, timestamped, and cryptographically
+            tied to a specific professional whose real-world identity and
+            accountability structure is recorded in the registry.
         </p>
 
-        <h3>2.3 The Attestation Layer</h3>
+        <h4>The attestation in practice</h4>
         <p>
-            Notachain attestations are ZK proofs: cryptographically signed
-            declarations that prove a minimum-disclosure statement about a
-            wallet holder's off-chain attributes, without revealing the
-            underlying data.
+            A wallet holder presents evidence to a registered professional. The
+            professional verifies the fact and produces a formal attestation
+            &mdash; whether as their own notarial instrument (civil law) or as a
+            witnessed declaration (common law), depending on their jurisdiction
+            and legal tradition. The proof document is published to IPFS. Only
+            the hash and signature go on-chain. The wallet holder's identity is
+            never on-chain.
         </p>
 
-        <h4>Two Traditions, Two Attestation Anatomies</h4>
-        <p>
-            In civil law jurisdictions, the notary owns the attestation &mdash;
-            they are making their own declaration. Their liability is total and
-            undivided. In common law jurisdictions, the legal professional is
-            the conduit. The wallet holder makes the declaration. The
-            professional witnesses it. The truth of the underlying claim belongs
-            to the wallet holder. The professional's liability is for knowingly
-            facilitating a false one.
-        </p>
-
-        <h4>The Attestation in Practice</h4>
-        <p>
-            A registered participant, presented with appropriate documentation
-            by a wallet holder, generates a ZK proof asserting the relevant
-            underwriting facts. Examples: "This wallet holder has never had an
-            approveAll event on any connected wallet in the preceding 12
-            months," "This wallet holder operates exclusively using hardware
-            wallet signing," or "This wallet holder has no prior claim history
-            on any crypto insurance product."
-        </p>
-        <p>
-            The proof is signed with the participant's registered private key
-            and published to the attestation layer. The wallet holder's identity
-            is never on-chain.
-        </p>
-
-        <h4>Legal Accountability as Trust Amplifier</h4>
+        <h4>Legal accountability as trust amplifier</h4>
         <p>
             A legal professional who fraudulently certifies false information
             risks criminal prosecution, loss of professional license, and civil
@@ -297,114 +290,163 @@
             deterrence.
         </p>
 
-        <h3>2.4 The Smart Contract Wallet</h3>
-        <p>
-            Notachain-compatible wallets are implemented as ERC-4337 smart
-            contract wallets &mdash; accounts where code governs execution
-            before any funds move.
-        </p>
+        <h3>3.4 Trust Tiers</h3>
+        <div class="doc-table-wrap">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Tier</th>
+                        <th>Category</th>
+                        <th>Trust weight</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>Tier A</td>
+                        <td>UINL civil law notaries</td>
+                        <td>
+                            Highest. Quasi-judicial status. Prima facie
+                            evidentiary weight. Suitable for high-value
+                            applications.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tier B</td>
+                        <td>
+                            Common law lawyer-attestors (US attorneys, UK
+                            solicitors and barristers, AU solicitors, NZ, SG,
+                            HK, Quebec notaires)
+                        </td>
+                        <td>
+                            High. Licensed legal practitioners with professional
+                            liability, disciplinary oversight, and criminal
+                            exposure.
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>Tier C</td>
+                        <td>
+                            Administrative notaries (US notaries public, general
+                            commissioners)
+                        </td>
+                        <td>
+                            Moderate. Non-lawyer officials with limited
+                            attestation authority. May require multiple
+                            attestations for high-value applications.
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
 
-        <h4>Air-Gapped Signing Oracle</h4>
-        <p>
-            The authorized signing key is generated entirely offline, on an
-            air-gapped device, and stored as a paper wallet. Transaction
-            authorization flows through an oracle layer. The security model
-            relocates the attack surface from cryptographic to physical.
-        </p>
+        <h2>4. Trust Model and Attack Surface</h2>
 
-        <h4>Behavioral Guardrails</h4>
-        <p>
-            The smart contract wallet enforces configurable behavioral rules:
-            amount thresholds, destination novelty checks, and velocity limits.
-            When a transaction matches a rule, the wallet can redirect funds to
-            a pre-designated succession address &mdash; the dead man's switch
-            pattern.
-        </p>
-
-        <h4>Heartbeat Succession</h4>
-        <p>
-            The wallet owner defines a periodic proof-of-life signed by the
-            air-gapped key. If the heartbeat lapses, the wallet enters
-            succession mode. This serves estate planning and theft detection
-            simultaneously.
-        </p>
-
-        <h2>3. The Insurance Protocol</h2>
-
-        <h3>3.1 The Underwriting Problem, Solved</h3>
-        <p>
-            Notachain separates two distinct data types: on-chain behavioral
-            history (perfectly transparent and immutable) and off-chain
-            behavioral signals (private, but attestable by a licensed notary via
-            ZK proof). Combined, these provide a risk profile richer and more
-            fraud-resistant than anything available to traditional insurers.
-        </p>
-
-        <h3>3.2 Risk Pricing Parameters</h3>
-        <p>
-            A Notachain insurance premium is calculated against wallet
-            architecture, behavioral history, notary attestations, and heartbeat
-            configuration. A wallet with optimal configuration presents a
-            fundamentally different risk profile from an unprotected hot wallet.
-        </p>
-
-        <h3>3.3 Claims Adjudication</h3>
-        <p>
-            On-chain transparency transforms claims from testimony-based to
-            evidence-based. The drain transaction is permanently recorded. The
-            full approval and interaction history is publicly readable. The
-            destination address and subsequent fund movement is traceable.
-        </p>
-        <p>
-            The primary claims fraud vector &mdash; fabricating or
-            misrepresenting events &mdash; is structurally eliminated. The
-            blockchain does not lie.
-        </p>
-
-        <h2>4. Trust Model and Attack Surface Analysis</h2>
-
-        <h3>4.1 What Notachain Trusts</h3>
+        <h3>4.1 What Notachain trusts</h3>
         <p>
             No system is trustless. Notachain is explicit about its trust
-            assumptions: cryptographic primitives (well-established,
-            independently audited), oracle liveness, notary honesty (backed by
-            legal liability), and registry integrity (mitigated by audit and
-            immutability).
+            assumptions: standard cryptographic primitives, attestor honesty
+            backed by legal liability rather than cryptographic enforcement, and
+            registry integrity mitigated by on-chain auditability and
+            immutability.
         </p>
 
-        <h3>4.2 Attack Surface Comparison</h3>
+        <h3>4.2 Attack vectors</h3>
         <p>
-            An EOA wallet requires an attacker to obtain the private key
-            (software attack surface). A Notachain wallet requires physical
-            access to air-gapped signing material AND evasion of behavioral
-            guardrails AND prevention of heartbeat succession. Each layer is
-            independently necessary. This is defense in depth as a cryptographic
-            and physical requirement.
+            <strong>Fraudulent self-registration:</strong> mitigated by criminal
+            liability for impersonating a licensed professional, out-of-band
+            verification via public licensing body registers, and the ability to
+            require multiple independent attestations for high-value
+            applications.
         </p>
-
-        <h3>4.3 Notary Registry Attack Vectors</h3>
         <p>
-            Primary scenarios include fraudulent self-registration (mitigated by
-            criminal liability and out-of-band verification), participant key
-            compromise (mitigated by physical security and in-person key
-            rotation), participant collusion (mitigated by multi-participant
-            attestation requirements), and Tier 1 registry manipulation
-            (mitigated by on-chain auditability and community ability to fork).
+            <strong>Key compromise:</strong> mitigated by physical security of
+            signing material and key rotation through formal identity
+            verification processes that an international attacker cannot easily
+            subvert.
         </p>
-
-        <h2>5. Open Problems and Future Work</h2>
         <p>
-            Cross-jurisdictional claims: jurisdiction follows the attestation
-            instrument, but this requires legal validation. Oracle reliability:
-            a robust fallback mechanism is needed that doesn't reintroduce the
-            attack surface. UX and adoption friction: the two-wallet model
-            (vault + hot wallet) requires careful product design. Dynamic risk
-            scoring: periodic attestation refresh and dynamic premium
-            adjustment. Regulatory framework: classification of attestations and
-            licensing requirements for protocol-native insurance.
+            <strong>Attestor collusion:</strong> mitigated by criminal fraud
+            liability, professional disciplinary consequences, multi-attestor
+            requirements for high-value applications, and cross-jurisdictional
+            panel requirements in the dispute resolution process.
+        </p>
+        <p>
+            <strong>Reference list manipulation:</strong> mitigated by on-chain
+            auditability, community ability to fork, progressive
+            decentralisation of list governance through the DAO, and the fact
+            that recognised bodies are publicly verifiable institutions that
+            cannot be invented.
         </p>
 
-        <h2>6. Conclusion</h2>
+        <h2>5. Applications</h2>
+        <p>
+            The attestation layer is general-purpose. Any protocol that requires
+            verified off-chain facts can consume Notachain attestations as a
+            trust primitive. Initial applications include:
+        </p>
+        <ul>
+            <li>
+                <strong>Insurance:</strong> underwriters can price individual
+                risk using attested off-chain facts (security practices, claim
+                history, hardware usage) combined with on-chain behavioral data.
+                Claims are adjudicated by reading the ledger, not arguing about
+                what happened.
+            </li>
+            <li>
+                <strong>Lending:</strong> undercollateralised loans become
+                possible when income or creditworthiness can be attested without
+                revealing the underlying data.
+            </li>
+            <li>
+                <strong>Identity:</strong> age-gating, credential verification,
+                and professional licensing without centralised KYC.
+            </li>
+            <li>
+                <strong>Procurement:</strong> verifying counterparty
+                credentials, jurisdictional compliance, and professional
+                qualifications.
+            </li>
+        </ul>
+
+        <h2>6. Open Problems</h2>
+        <ul>
+            <li>
+                <strong>Cross-jurisdictional enforcement:</strong> jurisdiction
+                follows the attestation instrument, but this requires legal
+                validation across target markets.
+            </li>
+            <li>
+                <strong>Attestation tooling:</strong> the signing and publishing
+                process must be simple enough for a legal professional with no
+                cryptographic knowledge. This middleware layer needs its own
+                design.
+            </li>
+            <li>
+                <strong>Dynamic attestations:</strong> a mechanism for periodic
+                re-attestation of temporal booleans and for consuming protocols
+                to check attestation freshness.
+            </li>
+            <li>
+                <strong>Privacy enhancement:</strong> zero-knowledge proofs may
+                be layered on top of the attestation primitive to enable
+                verification of attestation properties without revealing the
+                attestation contents. This is a future enhancement, not a launch
+                requirement.
+            </li>
+            <li>
+                <strong>Regulatory framework:</strong> the legal classification
+                of on-chain attestations and the licensing requirements for
+                products that consume them are open questions requiring
+                regulatory dialogue.
+            </li>
+            <li>
+                <strong>Chain selection:</strong> the specific EVM-compatible
+                chain for deployment based on fee economics and security
+                requirements.
+            </li>
+        </ul>
+
+        <h2>7. Conclusion</h2>
         <p>
             Notachain proposes a synthesis of centuries-old legal institutional
             infrastructure and modern cryptographic trust systems. The civil law
@@ -415,18 +457,12 @@
             that on-chain is not incremental. It is qualitative.
         </p>
         <p>
-            The immediate application is digital asset insurance. But the
-            Notachain attestation layer is general-purpose. Any on-chain
-            protocol that requires verified off-chain facts can consume
-            Notachain attestations as a trust primitive.
-        </p>
-        <p>
             The insight at the core of Notachain is simple: blockchain does not
-            hide. Every event is recorded. Every transaction is permanent. This
-            transparency, combined with legally-anchored off-chain attestations
-            and physically-secured signing architecture, creates a security and
-            insurance model demonstrably more robust than anything currently
-            available.
+            hide. Every event is recorded. Every transaction is permanent. But
+            blockchain cannot see beyond itself. A system cannot verify
+            statements about itself from within itself. It needs an external
+            input &mdash; accountable, verifiable, and legally enforceable
+            &mdash; to know anything about the people behind the wallets.
         </p>
         <p>
             Notachain is not a chain. It is the missing trust layer between the

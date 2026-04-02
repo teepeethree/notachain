@@ -45,7 +45,7 @@ func LoadSharedTemplates(fs embed.FS) {
 func LoadPageTemplates(fs embed.FS) {
 	t := make(map[string]*template.Template)
 
-	for _, name := range []string{"index", "whitepaper", "token-paper", "registry"} {
+	for _, name := range []string{"index", "whitepaper", "economics", "registry", "roadmap"} {
 		html := readFile(fs, "routes/"+name+".html")
 		if html == nil {
 			log.Printf("Failed to load %s", name)
@@ -131,10 +131,14 @@ func WhitepaperHandler(w http.ResponseWriter, r *http.Request) {
 	servePage(w, "whitepaper")
 }
 
-func TokenPaperHandler(w http.ResponseWriter, r *http.Request) {
-	servePage(w, "token-paper")
+func EconomicsHandler(w http.ResponseWriter, r *http.Request) {
+	servePage(w, "economics")
 }
 
 func RegistryHandler(w http.ResponseWriter, r *http.Request) {
 	servePage(w, "registry")
+}
+
+func RoadmapHandler(w http.ResponseWriter, r *http.Request) {
+	servePage(w, "roadmap")
 }
